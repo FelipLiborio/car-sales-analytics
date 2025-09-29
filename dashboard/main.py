@@ -169,6 +169,26 @@ if aba == "Análises Descritivas":
     st.plotly_chart(fig_map, use_container_width=True)
 
     # ----------------------------------------------------------
+    # Gráfico → Comparação Preço vs Odômetro/Condição
+    # ----------------------------------------------------------
+    st.subheader("📈 Comparação: Preço de Venda vs Odômetro/Condição")
+
+    eixo_x = st.sidebar.radio("Comparar preço com:", ["odometer", "condition"],
+                            format_func=lambda x: "Odômetro" if x == "odometer" else "Condição")
+
+    escala_cor = "Blues" if eixo_x == "odometer" else "Viridis"
+
+    fig_comp = px.scatter(
+        df, x=eixo_x, y="sellingprice",
+        opacity=0.6, color=df[eixo_x],
+        color_continuous_scale=escala_cor,
+        title=f"Preço de venda em função de {eixo_x}"
+    )
+    fig_comp.update_layout(height=500, title_x=0.5)
+    st.plotly_chart(fig_comp, use_container_width=True)
+
+
+    # ----------------------------------------------------------
     # Gráfico → Ano de Fabricação
     # ----------------------------------------------------------
     st.subheader("📅 Análise por Ano de Fabricação")
